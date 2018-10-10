@@ -1,0 +1,10 @@
+replicaCount: 1
+revisionHistoryLimit: 1
+image:
+  repository: mycluster.icp:8500/<IMAGE_NAMESPACE>/<IMAGE_NAME>
+  tag: <IMAGE_TAG>
+  pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 500Mi
