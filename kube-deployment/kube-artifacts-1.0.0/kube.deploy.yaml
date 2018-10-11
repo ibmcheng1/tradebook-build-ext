@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <KUBE_TOKEN_01>
+  labels:
+    app: <KUBE_TOKEN_02>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <KUBE_TOKEN_03>
+  template:
+    metadata:
+      labels:
+        app: <KUBE_TOKEN_04>
+    spec:
+      containers:
+      - name: <CONTAINER_NAME>
+        image: mycluster.icp:8500/default/<DOCKER_IMAGE>
+        volumeMounts:
+        - mountPath: /certs/truststore
+          name:  truststore-cert
+        ports:
+        - containerPort: 80
+          name: http
+          containerPort: 30549
+          name: kafka-broker
+        envFrom:
+        - configMapRef:
+            name: tslocation
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: icp
+      volumes:
+      - name: truststore-cert
+        secret:
+          secretName: kafka-jks-from-file-secret
